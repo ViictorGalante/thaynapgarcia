@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uma Pergunta Especial ❤️</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      text-align: center;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      max-width: 400px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .btn {
+      background-color: #ff6b81;
+      color: white;
+    }
+
+    .btn:hover {
+      background-color: #ff4757;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2 id="pergunta">Oi Thayna! responda as perguntas 💖</h2>
+  <div id="botoes">
+    <button class="btn" onclick="proximaPergunta()">Começar</button>
+  </div>
+</div>
+
+<script>
+  const perguntas = [
+    {
+      texto: "você se lembra de quanto você lutou por nós?",
+      respostas: ["Sim", "Não", "Com toda certeza do mundo"],
+      correta: 0
+    },
+    {
+      texto: "você acha que isso foi em vão ou ainda existe uma possibilidade (independente do tempo que demore) de ser meu amor até envelhecer?",
+      respostas: ["foi em vão...", "não foi em vão", "não foi em vão, e a possibilidade é incerta, porém quem sabe"],
+      correta: 0
+    },
+    {
+      texto: "Você realmente quer que eu siga minha vida, e nesse seguir encontre OUTRA pessoa?",
+      respostas: ["sim", "não"],
+      correta: 0
+    }
+  ];
+
+  let indice = -1;
+
+  function proximaPergunta() {
+    indice++;
+
+    if (indice < perguntas.length) {
+      const perguntaAtual = perguntas[indice];
+      document.getElementById("pergunta").innerText = perguntaAtual.texto;
+
+      const botoesDiv = document.getElementById("botoes");
+      botoesDiv.innerHTML = "";
+
+      perguntaAtual.respostas.forEach((resposta, i) => {
+        const btn = document.createElement("button");
+        btn.innerText = resposta;
+        btn.className = "btn";
+        btn.onclick = () => verificarResposta(i);
+        botoesDiv.appendChild(btn);
+      });
+    } else {
+      mostrarPedido();
+    }
+  }
+
+  function verificarResposta(resposta) {
+    proximaPergunta();
+  }
+
+  function mostrarPedido() {
+    document.getElementById("pergunta").innerText = "Vem ser feliz comigo cabeçuda? 💍";
+
+    const botoesDiv = document.getElementById("botoes");
+    botoesDiv.innerHTML = "";
+
+    const sim = document.createElement("button");
+    sim.innerText = "SIM ❤️";
+    sim.className = "btn";
+    sim.onclick = () => {
+      document.getElementById("pergunta").innerText = "te amo macumbeira kkk! 💖";
+      botoesDiv.innerHTML = "";
+    };
+
+    const nao = document.createElement("button");
+    nao.innerText = "Não 😢";
+    nao.className = "btn";
+
+    nao.onmouseover = () => {
+      nao.style.position = "absolute";
+      nao.style.top = Math.random() * 80 + "%";
+      nao.style.left = Math.random() * 80 + "%";
+    };
+
+    botoesDiv.appendChild(sim);
+    botoesDiv.appendChild(nao);
+  }
+</script>
+
+</body>
+</html>
+
