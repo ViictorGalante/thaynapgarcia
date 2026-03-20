@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> Cerveja e farra</title>
+  <title> tu deixa de ser teimosa pro amor ❤️</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -43,32 +44,49 @@
       background-color: #ff4757;
     }
   </style>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
 </head>
+
 <body>
 
 <div class="container">
-  <h2 id="pergunta" já que não podemos ter contato, decidi fazer diferente, propostas de forma nerd, assim eu treino a matéria e te faço propostas sem contato 💖</h2>
+  <h2 id="pergunta">Oi Thayna! isso não conta como contato kkkk responda as perguntas 💖</h2>
   <div id="botoes">
     <button class="btn" onclick="proximaPergunta()">Começar</button>
   </div>
 </div>
 
 <script>
+  // 🔥 COLE AQUI SEU firebaseConfig
+  const firebaseConfig = {
+    apiKey: "SUA_API_KEY",
+    authDomain: "SEU_AUTH_DOMAIN",
+    databaseURL: "SUA_DATABASE_URL",
+    projectId: "SEU_PROJECT_ID",
+    storageBucket: "SEU_BUCKET",
+    messagingSenderId: "SEU_ID",
+    appId: "SEU_APP_ID"
+  };
+
+  // Inicializar Firebase
+  const app = firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+
   const perguntas = [
     {
       texto: "você se lembra de quanto você lutou por nós?",
-      respostas: ["Sim", "Não", "Com toda certeza do mundo"],
-      correta: 0
+      respostas: ["Sim", "Não", "Com toda certeza do mundo"]
     },
     {
-      texto: "você acha que isso foi em vão ou ainda existe uma possibilidade (independente do tempo que demore) de ser meu amor até envelhecer?",
-      respostas: ["foi em vão...", "não foi em vão", "não foi em vão, e a possibilidade é incerta, porém quem sabe"],
-      correta: 0
+      texto: "você acha que isso foi em vão ou ainda existe uma possibilidade de ser meu amor?",
+      respostas: ["foi em vão...", "não foi em vão", "talvez..."]
     },
     {
-      texto: "Você realmente quer que eu siga minha vida, e nesse seguir encontre OUTRA pessoa?",
-      respostas: ["sim", "não"],
-      correta: 0
+      texto: "Você realmente quer que eu siga minha vida e encontre outra pessoa?",
+      respostas: ["sim", "não"]
     }
   ];
 
@@ -88,7 +106,7 @@
         const btn = document.createElement("button");
         btn.innerText = resposta;
         btn.className = "btn";
-        btn.onclick = () => verificarResposta(i);
+        btn.onclick = () => verificarResposta(resposta);
         botoesDiv.appendChild(btn);
       });
     } else {
@@ -97,7 +115,16 @@
   }
 
   function verificarResposta(resposta) {
+    salvarResposta(perguntas[indice].texto, resposta);
     proximaPergunta();
+  }
+
+  function salvarResposta(pergunta, resposta) {
+    database.ref("respostas").push({
+      pergunta: pergunta,
+      resposta: resposta,
+      data: new Date().toLocaleString()
+    });
   }
 
   function mostrarPedido() {
@@ -110,7 +137,9 @@
     sim.innerText = "SIM ❤️";
     sim.className = "btn";
     sim.onclick = () => {
-      document.getElementById("pergunta").innerText = "clicou no sim, agora vai ter que vir ser feliz a dois !!  te amo macumbeira kkk! 💖";
+      salvarResposta("pedido_final", "SIM");
+      document.getElementById("pergunta").innerText =
+        "agora você vai ter que ser feliz comigo 😍💖";
       botoesDiv.innerHTML = "";
     };
 
@@ -131,4 +160,3 @@
 
 </body>
 </html>
-
